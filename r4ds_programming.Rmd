@@ -11,18 +11,91 @@ output:
 
 _Demonstrate the use of the regular pipe (`%>%`) and the "explosion" operator (`%$%`) in some example_
 
+```{r}
+library(magrittr)
+nums = c(1,2,3,4,5,6,7,8,9) %>% matrix(ncol = 3) %>% data.frame()
+
+wtb = nums %$% table(X1,X2,X3)
+```
+
+
 ----
 
 # Ch 19: Functions
 
 ### 19.2: When should you write a function?
 Answer any 3
+```{r}
+rescale01 <- function(x) {
+  rng <- range(x, na.rm = TRUE)
+  (x - rng[1]) / (rng[2] - rng[1])
+}
+rescale01(c(0, 5, 10))
+rescale01(c(1, 2, 3, NA, 5))
+```
+1. If na.rm = FALSE, then all the max's and mins become na. 
+
+3. 
+```{r}
+meanfun = function(x){
+  c(mean(is.na(x)))
+}
+
+anotherfun = function(x){
+  c(x / sum(x, na.rm = TRUE))
+}
+
+sdmean = function(x){
+  c(sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE))
+}
+```
+
+6. 
+```{r}
+setwd("C:/Users/mitch2/Documents/School/499/assignments-mborgert")
+is_directory <- function(x) file.info(x)$isdir
+```
+This tells you whether a file is a directory.
+
+```{r}
+is_readable <- function(x) file.access(x, 4) == 0
+?file.access
+```
+This is a function to test if a file is readable.
 
 _Describe one time where you wish you had written a function, but didn't._
+For a project in Math 458. It took way too much copying and pasting. 
 
 
 ### 19.3: Functions are for humans and computers
-Answer any 2
+
+1.
+```{r}
+contains_prefix <- function(string, prefix) {
+  substr(string, 1, nchar(prefix)) == prefix
+}
+
+contains_prefix("prefix","pre")
+```
+This says if a prefix is in a word. 
+
+```{r}
+final_number_remover <- function(x) {
+  if (length(x) <= 1) return(NULL)
+  x[-length(x)]
+}
+
+final_number_remover(c(1,2,3,4))
+```
+This removes the final number in a vector, if there is 1 number or less it returns null.
+
+```{r}
+f3 <- function(x, y) {
+  rep(y, length.out = length(x))
+}
+```
+
+
 
 _What does "Functions are for humans and computers" mean to you?_
 
