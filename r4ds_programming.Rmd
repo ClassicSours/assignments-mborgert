@@ -93,7 +93,11 @@ This removes the final number in a vector, if there is 1 number or less it retur
 f3 <- function(x, y) {
   rep(y, length.out = length(x))
 }
+
+f3(555,"dootfsdfs")
+?rep
 ```
+
 
 
 
@@ -101,33 +105,114 @@ _What does "Functions are for humans and computers" mean to you?_
 
 ### 19.4 Conditional execution
 Answer any 3
+1. 
+```{r}
+?ifelse
+x = c(6:-4)
+sqrt(x)
+sqrt(ifelse(x >= 0, x, NA))
+
+```
+```{r}
+x = 11
+if(x == 11){
+  x = x + 1
+}
+```
+
+ifelse does the else in the function. 
+
+3. 
+```{r}
+fizzbuzz.fun = function(x){
+if(x %% 3 == 0 && x %% 5 == 0) {
+  c("fizzbuzz")
+}
+else if(x %% 3 == 0){
+  c("fizz")
+}
+else if(x %% 5 == 0){
+  c("buzz")
+}
+}
+
+fizzbuzz.fun(45)
+```
+
+6. 
+```{r}
+x = "e"
+switch(x, 
+  a = ,
+  b = "ab",
+  c = ,
+  d = "cd"
+)
+
+```
+Nothing happens if x = "e". Switch switches stuff. 
+```{r}
+switch(1,"red","green","blue")
+switch(2,"red","green","blue")
+
+centre <- function(x, type) {
+ switch(type,
+        mean = mean(x),
+      median = median(x),
+         trimmed = mean(x, trim = .1))
+}
+x = rnorm(10)
+centre(x,"mean")
+
+```
 
 ### 19.5 Function arguments
-Answer any 2
+
+2. Trim chops off an amount of decimals. You use it when you want less decimals. 
+
+4.
+```{r}
+?cor
+```
+Pearson is default. The three are different types of computing the correlation. 
 
 ### 19.6: Return values
 _Is it mandatory that you `return()` a value from a function? If not, give on reasons for why you would want to do so. If so, explain what happens if you don't include the return._
 
+It's not necessary to return someone, the function still runs. 
+
 ### 19.7: Environment
 _What's the problem with the example function at the beginning of this chapter?_
+
+Y wasn't initialized. 
 
 ----
 
 # 20: Vectors
 
 ###  20.3: Important types of atomic vector
-Answer any 2
+
+```{r}
+library(dplyr)
+near
+```
+if x-y is less than some total, they are near. 
+
+5. the parse atomic functions let you turn a string into others. 
 
 ### 20.4: Using Atomic Vectors
-Answer #4, and then 2 others. 
+
+
+
 
 ### 20.5: Recursive vectors (lists)
-Answer either one
+I drew the lists. 
 
 ### 20.7: Augmented vectors
 
 _Describe at least two differences between a `data.frame` and a `tibble`_
 
+All elements must be vectors. All elements must be the same length. 
 ----
 
 # Chapter 21: Iteration
@@ -136,13 +221,36 @@ _Describe at least two differences between a `data.frame` and a `tibble`_
 Any one question
 
 ### 21.3: For Loop Variations
-Problem #1
+create a list with each dataframe as an entry then data.frame( each entry in the list )
 
 ### 21.4: For loops vs functionals
-Problem #2
+```{r}
+col_summary <- function(df, fun) {
+  out <- vector("double", length(df))
+  for (i in seq_along(df)) {
+    if(is.numeric(df[[i]]) == TRUE){
+    out[i] <- fun(df[[i]])
+    }
+    else{
+      out[i] <- NA
+    }
+  }
+  out
+}
+```
+
 
 ### 21.5: the map function
-Any 2 problems
+2. make a list that has as many columns as a dataframe. for loop through the colums and fill the list the is.factor results. 
+
+```{r}
+library(purrr)
+map(-2:2, rnorm, n = 5)
+map_dbl(-2:2, rnorm, n = 5)
+?map_dbl
+```
+The first creates 5x5 rnorm numbers. The second does not work because 
+
 
 ----
 
