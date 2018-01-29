@@ -202,7 +202,34 @@ if x-y is less than some total, they are near.
 
 ### 20.4: Using Atomic Vectors
 
+4. 
+```{r}
+last.fun = function(x){
+  last = length(x)
+  c(x[[last]])
+}
 
+even.fun = function(x){
+  leng = length(x)
+  vec = list()
+  for(i in leng){
+    if(i %% 2 == 0){
+      vec[[i]] = x
+    }
+  }
+}
+
+notlast.fun = function(x){
+  leng = length(x)
+  c(x[-leng])
+}
+
+even.fun = function(x){
+  y = 2x
+  c(y)
+}
+
+```
 
 
 ### 20.5: Recursive vectors (lists)
@@ -218,7 +245,43 @@ All elements must be vectors. All elements must be the same length.
 # Chapter 21: Iteration
 
 ### 21.2: For Loops
-Any one question
+```{r}
+out <- ""
+for (x in letters) {
+  out <- stringr::str_c(out, x)
+}
+letters
+library(stringr)
+
+paste(letters, collapse="")
+
+
+
+x <- sample(100)
+sd <- 0
+for (i in seq_along(x)) {
+  sd <- sd + (x[i] - mean(x)) ^ 2
+}
+sd <- sqrt(sd / (length(x) - 1))
+
+
+sd(x)
+
+
+
+x <- runif(100)
+out <- vector("numeric", length(x))
+out[1] <- x[1]
+for (i in 2:length(x)) {
+  out[i] <- out[i - 1] + x[i]
+}
+
+
+out[100]
+sum(x)
+?sum
+```
+
 
 ### 21.3: For Loop Variations
 create a list with each dataframe as an entry then data.frame( each entry in the list )
@@ -241,7 +304,7 @@ col_summary <- function(df, fun) {
 
 
 ### 21.5: the map function
-2. make a list that has as many columns as a dataframe. for loop through the colums and fill the list the is.factor results. 
+2. make a list that has as many columns as a dataframe. for loop through the columns and fill the list the is.factor results. Or use the map function and is.factor. 
 
 ```{r}
 library(purrr)
@@ -249,7 +312,7 @@ map(-2:2, rnorm, n = 5)
 map_dbl(-2:2, rnorm, n = 5)
 ?map_dbl
 ```
-The first creates 5x5 rnorm numbers. The second does not work because 
+The first creates 5x5 rnorm numbers. The second does not work because of something to do with doubles. 
 
 
 ----
