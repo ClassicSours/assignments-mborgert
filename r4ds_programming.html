@@ -128,6 +128,10 @@ $(document).ready(function () {
 <div id="ch-18-pipes" class="section level1">
 <h1>Ch 18: Pipes</h1>
 <p><em>Demonstrate the use of the regular pipe (<code>%&gt;%</code>) and the “explosion” operator (<code>%$%</code>) in some example</em></p>
+<pre class="r"><code>library(magrittr)
+nums = c(1,2,3,4,5,6,7,8,9) %&gt;% matrix(ncol = 3) %&gt;% data.frame()
+
+wtb = nums %$% table(X1,X2,X3)</code></pre>
 <hr />
 </div>
 <div id="ch-19-functions" class="section level1">
@@ -135,28 +139,146 @@ $(document).ready(function () {
 <div id="when-should-you-write-a-function" class="section level3">
 <h3>19.2: When should you write a function?</h3>
 <p>Answer any 3</p>
-<p><em>Describe one time where you wish you had written a function, but didn’t.</em></p>
+<pre class="r"><code>rescale01 &lt;- function(x) {
+  rng &lt;- range(x, na.rm = TRUE)
+  (x - rng[1]) / (rng[2] - rng[1])
+}
+rescale01(c(0, 5, 10))</code></pre>
+<pre><code>## [1] 0.0 0.5 1.0</code></pre>
+<pre class="r"><code>rescale01(c(1, 2, 3, NA, 5))</code></pre>
+<pre><code>## [1] 0.00 0.25 0.50   NA 1.00</code></pre>
+<ol style="list-style-type: decimal">
+<li><p>If na.rm = FALSE, then all the max’s and mins become na.</p></li>
+<li></li>
+</ol>
+<pre class="r"><code>meanfun = function(x){
+  c(mean(is.na(x)))
+}
+
+anotherfun = function(x){
+  c(x / sum(x, na.rm = TRUE))
+}
+
+sdmean = function(x){
+  c(sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE))
+}</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li></li>
+</ol>
+<pre class="r"><code>setwd(&quot;C:/Users/mitch2/Documents/School/499/assignments-mborgert&quot;)
+is_directory &lt;- function(x) file.info(x)$isdir</code></pre>
+<p>This tells you whether a file is a directory.</p>
+<pre class="r"><code>is_readable &lt;- function(x) file.access(x, 4) == 0
+?file.access</code></pre>
+<p>This is a function to test if a file is readable.</p>
+<p><em>Describe one time where you wish you had written a function, but didn’t.</em> For a project in Math 458. It took way too much copying and pasting.</p>
 </div>
 <div id="functions-are-for-humans-and-computers" class="section level3">
 <h3>19.3: Functions are for humans and computers</h3>
-<p>Answer any 2</p>
+<ol style="list-style-type: decimal">
+<li></li>
+</ol>
+<pre class="r"><code>contains_prefix &lt;- function(string, prefix) {
+  substr(string, 1, nchar(prefix)) == prefix
+}
+
+contains_prefix(&quot;prefix&quot;,&quot;pre&quot;)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>This says if a prefix is in a word.</p>
+<pre class="r"><code>final_number_remover &lt;- function(x) {
+  if (length(x) &lt;= 1) return(NULL)
+  x[-length(x)]
+}
+
+final_number_remover(c(1,2,3,4))</code></pre>
+<pre><code>## [1] 1 2 3</code></pre>
+<p>This removes the final number in a vector, if there is 1 number or less it returns null.</p>
+<pre class="r"><code>f3 &lt;- function(x, y) {
+  rep(y, length.out = length(x))
+}
+
+f3(555,&quot;dootfsdfs&quot;)</code></pre>
+<pre><code>## [1] &quot;dootfsdfs&quot;</code></pre>
+<pre class="r"><code>?rep</code></pre>
 <p><em>What does “Functions are for humans and computers” mean to you?</em></p>
 </div>
 <div id="conditional-execution" class="section level3">
 <h3>19.4 Conditional execution</h3>
-<p>Answer any 3</p>
+<p>Answer any 3 1.</p>
+<pre class="r"><code>?ifelse
+x = c(6:-4)
+sqrt(x)</code></pre>
+<pre><code>## Warning in sqrt(x): NaNs produced</code></pre>
+<pre><code>##  [1] 2.449490 2.236068 2.000000 1.732051 1.414214 1.000000 0.000000
+##  [8]      NaN      NaN      NaN      NaN</code></pre>
+<pre class="r"><code>sqrt(ifelse(x &gt;= 0, x, NA))</code></pre>
+<pre><code>##  [1] 2.449490 2.236068 2.000000 1.732051 1.414214 1.000000 0.000000
+##  [8]       NA       NA       NA       NA</code></pre>
+<pre class="r"><code>x = 11
+if(x == 11){
+  x = x + 1
+}</code></pre>
+<p>ifelse does the else in the function.</p>
+<ol start="3" style="list-style-type: decimal">
+<li></li>
+</ol>
+<pre class="r"><code>fizzbuzz.fun = function(x){
+if(x %% 3 == 0 &amp;&amp; x %% 5 == 0) {
+  c(&quot;fizzbuzz&quot;)
+}
+else if(x %% 3 == 0){
+  c(&quot;fizz&quot;)
+}
+else if(x %% 5 == 0){
+  c(&quot;buzz&quot;)
+}
+}
+
+fizzbuzz.fun(45)</code></pre>
+<pre><code>## [1] &quot;fizzbuzz&quot;</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li></li>
+</ol>
+<pre class="r"><code>x = &quot;e&quot;
+switch(x, 
+  a = ,
+  b = &quot;ab&quot;,
+  c = ,
+  d = &quot;cd&quot;
+)</code></pre>
+<p>Nothing happens if x = “e”. Switch switches stuff.</p>
+<pre class="r"><code>switch(1,&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;)</code></pre>
+<pre><code>## [1] &quot;red&quot;</code></pre>
+<pre class="r"><code>switch(2,&quot;red&quot;,&quot;green&quot;,&quot;blue&quot;)</code></pre>
+<pre><code>## [1] &quot;green&quot;</code></pre>
+<pre class="r"><code>centre &lt;- function(x, type) {
+ switch(type,
+        mean = mean(x),
+      median = median(x),
+         trimmed = mean(x, trim = .1))
+}
+x = rnorm(10)
+centre(x,&quot;mean&quot;)</code></pre>
+<pre><code>## [1] -0.1485202</code></pre>
 </div>
 <div id="function-arguments" class="section level3">
 <h3>19.5 Function arguments</h3>
-<p>Answer any 2</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Trim chops off an amount of decimals. You use it when you want less decimals.</p></li>
+<li></li>
+</ol>
+<pre class="r"><code>?cor</code></pre>
+<p>Pearson is default. The three are different types of computing the correlation.</p>
 </div>
 <div id="return-values" class="section level3">
 <h3>19.6: Return values</h3>
 <p><em>Is it mandatory that you <code>return()</code> a value from a function? If not, give on reasons for why you would want to do so. If so, explain what happens if you don’t include the return.</em></p>
+<p>It’s not necessary to return someone, the function still runs.</p>
 </div>
 <div id="environment" class="section level3">
 <h3>19.7: Environment</h3>
 <p><em>What’s the problem with the example function at the beginning of this chapter?</em></p>
+<p>Y wasn’t initialized.</p>
 <hr />
 </div>
 </div>
@@ -164,39 +286,159 @@ $(document).ready(function () {
 <h1>20: Vectors</h1>
 <div id="important-types-of-atomic-vector" class="section level3">
 <h3>20.3: Important types of atomic vector</h3>
-<p>Answer any 2</p>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: 'dplyr'</code></pre>
+<pre><code>## The following objects are masked from 'package:stats':
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>near</code></pre>
+<pre><code>## function (x, y, tol = .Machine$double.eps^0.5) 
+## {
+##     abs(x - y) &lt; tol
+## }
+## &lt;environment: namespace:dplyr&gt;</code></pre>
+<p>if x-y is less than some total, they are near.</p>
+<ol start="5" style="list-style-type: decimal">
+<li>the parse atomic functions let you turn a string into others.</li>
+</ol>
 </div>
 <div id="using-atomic-vectors" class="section level3">
 <h3>20.4: Using Atomic Vectors</h3>
-<p>Answer #4, and then 2 others.</p>
+<ol start="4" style="list-style-type: decimal">
+<li></li>
+</ol>
+<pre class="r"><code>last.fun = function(x){
+  last = length(x)
+  c(x[[last]])
+}
+
+even.fun = function(x){
+  leng = length(x)
+  vec = list()
+  for(i in leng){
+    if(i %% 2 == 0){
+      vec[[i]] = x
+    }
+  }
+}
+
+notlast.fun = function(x){
+  leng = length(x)
+  c(x[-leng])
+}
+
+even.fun = function(x){
+  y = 2*x
+  c(y)
+}</code></pre>
 </div>
 <div id="recursive-vectors-lists" class="section level3">
 <h3>20.5: Recursive vectors (lists)</h3>
-<p>Answer either one</p>
+<p>I drew the lists.</p>
 </div>
 <div id="augmented-vectors" class="section level3">
 <h3>20.7: Augmented vectors</h3>
 <p><em>Describe at least two differences between a <code>data.frame</code> and a <code>tibble</code></em></p>
-<hr />
+</div>
+<div id="all-elements-must-be-vectors.-all-elements-must-be-the-same-length." class="section level2">
+<h2>All elements must be vectors. All elements must be the same length.</h2>
 </div>
 </div>
 <div id="chapter-21-iteration" class="section level1">
 <h1>Chapter 21: Iteration</h1>
 <div id="for-loops" class="section level3">
 <h3>21.2: For Loops</h3>
-<p>Any one question</p>
+<pre class="r"><code>out &lt;- &quot;&quot;
+for (x in letters) {
+  out &lt;- stringr::str_c(out, x)
+}
+letters</code></pre>
+<pre><code>##  [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot;
+## [18] &quot;r&quot; &quot;s&quot; &quot;t&quot; &quot;u&quot; &quot;v&quot; &quot;w&quot; &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
+<pre class="r"><code>library(stringr)
+
+paste(letters, collapse=&quot;&quot;)</code></pre>
+<pre><code>## [1] &quot;abcdefghijklmnopqrstuvwxyz&quot;</code></pre>
+<pre class="r"><code>x &lt;- sample(100)
+sd &lt;- 0
+for (i in seq_along(x)) {
+  sd &lt;- sd + (x[i] - mean(x)) ^ 2
+}
+sd &lt;- sqrt(sd / (length(x) - 1))
+
+
+sd(x)</code></pre>
+<pre><code>## [1] 29.01149</code></pre>
+<pre class="r"><code>x &lt;- runif(100)
+out &lt;- vector(&quot;numeric&quot;, length(x))
+out[1] &lt;- x[1]
+for (i in 2:length(x)) {
+  out[i] &lt;- out[i - 1] + x[i]
+}
+
+
+out[100]</code></pre>
+<pre><code>## [1] 56.88754</code></pre>
+<pre class="r"><code>sum(x)</code></pre>
+<pre><code>## [1] 56.88754</code></pre>
+<pre class="r"><code>?sum</code></pre>
 </div>
 <div id="for-loop-variations" class="section level3">
 <h3>21.3: For Loop Variations</h3>
-<p>Problem #1</p>
+<p>create a list with each dataframe as an entry then data.frame( each entry in the list )</p>
 </div>
 <div id="for-loops-vs-functionals" class="section level3">
 <h3>21.4: For loops vs functionals</h3>
-<p>Problem #2</p>
+<pre class="r"><code>col_summary &lt;- function(df, fun) {
+  out &lt;- vector(&quot;double&quot;, length(df))
+  for (i in seq_along(df)) {
+    if(is.numeric(df[[i]]) == TRUE){
+    out[i] &lt;- fun(df[[i]])
+    }
+    else{
+      out[i] &lt;- NA
+    }
+  }
+  out
+}</code></pre>
 </div>
 <div id="the-map-function" class="section level3">
 <h3>21.5: the map function</h3>
-<p>Any 2 problems</p>
+<ol start="2" style="list-style-type: decimal">
+<li>make a list that has as many columns as a dataframe. for loop through the columns and fill the list the is.factor results. Or use the map function and is.factor.</li>
+</ol>
+<pre class="r"><code>library(purrr)</code></pre>
+<pre><code>## 
+## Attaching package: 'purrr'</code></pre>
+<pre><code>## The following objects are masked from 'package:dplyr':
+## 
+##     contains, order_by</code></pre>
+<pre><code>## The following object is masked from 'package:magrittr':
+## 
+##     set_names</code></pre>
+<pre class="r"><code>map(-2:2, rnorm, n = 5)</code></pre>
+<pre><code>## [[1]]
+## [1] -0.3694136 -1.8696878 -2.4176893 -1.4308992 -3.5576798
+## 
+## [[2]]
+## [1] -0.701778954 -0.809509187 -2.067986512 -3.264664843  0.007539977
+## 
+## [[3]]
+## [1] -1.11890801 -1.76571683 -0.05202531 -0.36023562 -0.07211708
+## 
+## [[4]]
+## [1]  2.3703986 -0.5412843  0.9297663  0.2717536  0.3499131
+## 
+## [[5]]
+## [1] 0.1851741 3.6227854 1.9011677 3.5507663 0.2200895</code></pre>
+<pre class="r"><code>map_dbl(-2:2, rnorm, n = 5)</code></pre>
+<pre><code>## Error: Result 1 is not a length 1 atomic vector</code></pre>
+<pre class="r"><code>?map_dbl</code></pre>
+<p>The first creates 5x5 rnorm numbers. The second does not work because of something to do with doubles.</p>
 <hr />
 <p>End here. The rest of 21 is for your info only</p>
 </div>
