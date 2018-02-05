@@ -1,11 +1,13 @@
 ---
 title: "R programming (r4ds Section III)"
-author: "name"
-date: "date"
+author: "Mitch"
+date: "1-30-18"
 output: 
   html_document: 
     keep_md: yes
 ---
+
+<span style="color:blue">some *blue* text</span>
 
 # Ch 18: Pipes
 
@@ -77,6 +79,10 @@ This tells you whether a file is a directory.
 is_readable <- function(x) file.access(x, 4) == 0
 ?file.access
 ```
+
+```
+## starting httpd help server ... done
+```
 This is a function to test if a file is readable.
 
 _Describe one time where you wish you had written a function, but didn't._
@@ -136,6 +142,7 @@ f3(555,"dootfsdfs")
 
 
 _What does "Functions are for humans and computers" mean to you?_
+<span style="color:red">answer missing</span>
 
 ### 19.4 Conditional execution
 Answer any 3
@@ -237,7 +244,7 @@ centre(x,"mean")
 ```
 
 ```
-## [1] -0.1485202
+## [1] 0.06786185
 ```
 
 ### 19.5 Function arguments
@@ -330,7 +337,7 @@ notlast.fun = function(x){
 }
 
 even.fun = function(x){
-  y = 2*x
+  y = 2*x 
   c(y)
 }
 ```
@@ -344,6 +351,7 @@ I drew the lists.
 _Describe at least two differences between a `data.frame` and a `tibble`_
 
 All elements must be vectors. All elements must be the same length. 
+
 ----
 
 # Chapter 21: Iteration
@@ -402,7 +410,7 @@ out[100]
 ```
 
 ```
-## [1] 56.88754
+## [1] 51.07759
 ```
 
 ```r
@@ -410,7 +418,7 @@ sum(x)
 ```
 
 ```
-## [1] 56.88754
+## [1] 51.07759
 ```
 
 ```r
@@ -420,6 +428,8 @@ sum(x)
 
 ### 21.3: For Loop Variations
 create a list with each dataframe as an entry then data.frame( each entry in the list )
+
+<span style="color:red">answer missing</span>
 
 ### 21.4: For loops vs functionals
 
@@ -453,12 +463,6 @@ library(purrr)
 ```
 
 ```
-## The following objects are masked from 'package:dplyr':
-## 
-##     contains, order_by
-```
-
-```
 ## The following object is masked from 'package:magrittr':
 ## 
 ##     set_names
@@ -470,19 +474,19 @@ map(-2:2, rnorm, n = 5)
 
 ```
 ## [[1]]
-## [1] -0.3694136 -1.8696878 -2.4176893 -1.4308992 -3.5576798
+## [1] -1.4464461 -0.9832833 -2.3655465 -1.9183185 -1.9748368
 ## 
 ## [[2]]
-## [1] -0.701778954 -0.809509187 -2.067986512 -3.264664843  0.007539977
+## [1] -0.8194392 -1.6222657 -1.5196654 -0.1510268 -1.3323436
 ## 
 ## [[3]]
-## [1] -1.11890801 -1.76571683 -0.05202531 -0.36023562 -0.07211708
+## [1] -1.9497651  0.3714242  0.6844355 -0.2529109 -1.0534907
 ## 
 ## [[4]]
-## [1]  2.3703986 -0.5412843  0.9297663  0.2717536  0.3499131
+## [1]  1.5992077  1.3182469  2.3888906  0.8062082 -0.2821944
 ## 
 ## [[5]]
-## [1] 0.1851741 3.6227854 1.9011677 3.5507663 0.2200895
+## [1] 1.953882 1.286264 1.453376 3.034736 3.796654
 ```
 
 ```r
@@ -498,6 +502,7 @@ map_dbl(-2:2, rnorm, n = 5)
 ```
 The first creates 5x5 rnorm numbers. The second does not work because of something to do with doubles. 
 
+<span style="color:red">answer missing</span>
 
 ----
 

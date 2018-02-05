@@ -7,6 +7,8 @@ output:
     keep_md: yes
 ---
 
+<span style="color:blue">some *blue* text</span>
+
 # Ch 18: Pipes
 
 _Demonstrate the use of the regular pipe (`%>%`) and the "explosion" operator (`%$%`) in some example_
@@ -102,6 +104,7 @@ f3(555,"dootfsdfs")
 
 
 _What does "Functions are for humans and computers" mean to you?_
+<span style="color:red">answer missing</span>
 
 ### 19.4 Conditional execution
 Answer any 3
@@ -240,6 +243,7 @@ I drew the lists.
 _Describe at least two differences between a `data.frame` and a `tibble`_
 
 All elements must be vectors. All elements must be the same length. 
+
 ----
 
 # Chapter 21: Iteration
@@ -286,6 +290,8 @@ sum(x)
 ### 21.3: For Loop Variations
 create a list with each dataframe as an entry then data.frame( each entry in the list )
 
+<span style="color:red">answer missing</span>
+
 ### 21.4: For loops vs functionals
 ```{r}
 col_summary <- function(df, fun) {
@@ -314,6 +320,7 @@ map_dbl(-2:2, rnorm, n = 5)
 ```
 The first creates 5x5 rnorm numbers. The second does not work because of something to do with doubles. 
 
+<span style="color:red">answer missing</span>
 
 ----
 
