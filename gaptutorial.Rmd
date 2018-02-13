@@ -21,7 +21,7 @@ gap <- read.csv(url("https://raw.githubusercontent.com/swcarpentry/r-novice-gapm
 
 ##After that I thought about the best way to represent this data. We wanted to look at life expectancy over time for each country. There aren't any coordinates, so a map would be hard to make. I chose to make a dot plot for each country since it would be easy. Heres the code: 
 
-```{r}
+```{r,eval=FALSE}
 for (var in unique(gap$country)) {
   print( ggplot(gap[gap$country==var,], aes(year, lifeExp)) + geom_point() + ggtitle(var) )
 }
