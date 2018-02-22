@@ -1,11 +1,13 @@
 ---
-title: "hw2"
-author: "mitch borgert"
+title: "Hw2"
+author: "Mitch Borgert"
 date: "February 17, 2018"
-output: pdf_document
+output: 
+  pdf_document: default
+  keep_md: yes
 ---
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 library(tidyverse)
 library(modelr)
 library(ggplot2)
@@ -80,7 +82,7 @@ The loess line is close to the normal linear line, but it is pulled more toward 
 ?geom_ref_line
 ```
 
-geom_ref_line is from the modelr package. It adds a reference line to the graph and is usful for visually looking at the trend in the residuals. 
+geom_ref_line is from the modelr package. It adds a reference line to the graph and is useful for visually looking at the trend in the residuals. 
 
 
 #23.3.3. 4. Why might you want to look at a frequency polygon of absolute residuals? What are the pros and cons compared to looking at the raw residuals?
@@ -90,7 +92,7 @@ You want to check the absolute residuals because it helps to see the overall qua
 #23.4.5 1. 
 
 ```{r}
-mod1 <- lm(y~x - 1, data = sim2)
+mod1 <- lm(y~x - 1, data = sim2) # Why -1 ? What does that do? I used "0 + x", I don't even know if what I did was right
 summary(mod1)
 mod2 <- lm(y~x, data = sim2)
 summary(mod2)
@@ -112,7 +114,7 @@ summary(mod2)
 ```
 
 Is this what this problem wants?
-
+I also had no clue what the problem was asking for. Some of the questions are too vague.
 
 #23.4.5. 4. 
 
@@ -125,3 +127,5 @@ par(plot(mod2), mfrow = c(2,2))
 ```
 
 It looks like model 2 is better, the residuals care closer to normal than on model 1. 
+
+Very concise, straightforward, and easy to follow. I spell checked and added a few comments.
