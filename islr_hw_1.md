@@ -42,7 +42,14 @@ library(dplyr)
 
 ```r
 library(ggplot2)
+library(pander)
+```
 
+```
+## Warning: package 'pander' was built under R version 3.4.3
+```
+
+```r
 bos = Boston
 ```
 
@@ -123,130 +130,158 @@ As distance from employment centers increases, crime looks like it decreases.
 #d. 
 
 ```r
-zmsummary = bos %>% group_by(zn) %>% summarise(mcrime = mean(crim), mtax = mean(tax), mptratio = mean(ptratio))
-zmsummary
+ggplot(data=bos,aes(x=crim))+geom_histogram()
 ```
 
 ```
-## # A tibble: 26 x 4
-##       zn     mcrime     mtax mptratio
-##    <dbl>      <dbl>    <dbl>    <dbl>
-##  1   0.0 4.86848648 449.1828 19.05780
-##  2  12.5 0.13718500 321.2000 16.31000
-##  3  17.5 0.01951000 216.0000 18.60000
-##  4  18.0 0.00632000 296.0000 15.30000
-##  5  20.0 0.41906952 245.0952 14.69524
-##  6  21.0 0.05887750 243.0000 16.80000
-##  7  22.0 0.20944700 330.0000 19.10000
-##  8  25.0 0.09733800 282.8000 19.42000
-##  9  28.0 0.03790667 270.0000 18.20000
-## 10  30.0 0.10414000 300.0000 16.60000
-## # ... with 16 more rows
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-Zone 20 has high crime, zone 45 has high tax, and zones 22 and 25 have a high ptratio. 
+![](islr_hw_1_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+
+```r
+ggplot(data=bos,aes(x=tax))+geom_histogram()
+```
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+![](islr_hw_1_files/figure-html/unnamed-chunk-4-2.png)<!-- -->
+
+```r
+ggplot(data=bos,aes(x=ptratio))+geom_histogram()
+```
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+![](islr_hw_1_files/figure-html/unnamed-chunk-4-3.png)<!-- -->
+
+It seems crime can go from 0 to close to 100, with numbers bigger than 20 being unusal. Tax can go from 150ish to 700, with 700 maybe not being unusual. The ptratio can go from 12.5 to close to 22.5, with 22.,5 being unusual.  
 
 #e. 
 
 ```r
-zmsummary2 = bos %>% group_by(zn) %>% summarise(charles = mean(chas))
-zmsummary2
+bosriver = bos %>% filter(chas==1)
 ```
-
-```
-## # A tibble: 26 x 2
-##       zn    charles
-##    <dbl>      <dbl>
-##  1   0.0 0.07526882
-##  2  12.5 0.00000000
-##  3  17.5 0.00000000
-##  4  18.0 0.00000000
-##  5  20.0 0.14285714
-##  6  21.0 0.00000000
-##  7  22.0 0.00000000
-##  8  25.0 0.00000000
-##  9  28.0 0.00000000
-## 10  30.0 0.00000000
-## # ... with 16 more rows
-```
-Zone 20, 40, and 90 bound the charles river. 
-
+35 neighborhoods border the river. 
 #f. 
 
 ```r
-median(bos$ptratio)
+median(bosriver$ptratio)
 ```
 
 ```
-## [1] 19.05
+## [1] 17.6
 ```
 
-The median ptratio is 19.05. 
+The median ptratio is 17.6.  
 
 #g. 
 
 ```r
-zmsummary3 = bos %>% group_by(zn) %>% summarise(mvo = median(medv))
-zmsummary3
+bos3 = bos %>% filter(medv == min(medv))
+bos3
 ```
 
 ```
-## # A tibble: 26 x 2
-##       zn   mvo
-##    <dbl> <dbl>
-##  1   0.0 19.75
-##  2  12.5 19.90
-##  3  17.5 33.00
-##  4  18.0 24.00
-##  5  20.0 35.20
-##  6  21.0 21.95
-##  7  22.0 24.45
-##  8  25.0 23.10
-##  9  28.0 22.90
-## 10  30.0 22.75
-## # ... with 16 more rows
-```
-
-```r
-bos35 = bos %>% filter(zn == 35) %>% group_by(zn) %>% summarise(mcrim = mean(crim),mindus = mean(indus),mnox = mean(nox), mage= mean(age))
-bos35
-```
-
-```
-## # A tibble: 1 x 5
-##      zn      mcrim   mindus      mnox     mage
-##   <dbl>      <dbl>    <dbl>     <dbl>    <dbl>
-## 1    35 0.03263333 4.546667 0.4392667 33.66667
+##      crim zn indus chas   nox    rm age    dis rad tax ptratio  black
+## 1 38.3518  0  18.1    0 0.693 5.453 100 1.4896  24 666    20.2 396.90
+## 2 67.9208  0  18.1    0 0.693 5.683 100 1.4254  24 666    20.2 384.97
+##   lstat medv
+## 1 30.59    5
+## 2 22.98    5
 ```
 
 
-Zone 35 has the lowest median value of owner occupied homes. Mean crime is low, mean industrial proportion is 4.5. Mean nitrogen is .43. Mean age is 33.66.
+There are 2 suburbs that have a medv of 5. They both have a high ptratio, a high age at 100, high nox, and a close distance to employment centers. 
 
 #h.
 
 ```r
-zmsummary4 = bos %>% group_by(zn) %>% summarise(mrm = mean(rm))
-zmsummary4
+bos7rms = bos %>% filter(rm>=7)
+bos8rms = bos %>% filter(rm>=8)
+
+pander(summary(bos8rms))
 ```
 
-```
-## # A tibble: 26 x 2
-##       zn      mrm
-##    <dbl>    <dbl>
-##  1   0.0 6.147922
-##  2  12.5 5.945100
-##  3  17.5 7.104000
-##  4  18.0 6.575000
-##  5  20.0 7.160190
-##  6  21.0 6.146750
-##  7  22.0 6.482400
-##  8  25.0 6.281200
-##  9  28.0 6.300667
-## 10  30.0 6.471667
-## # ... with 16 more rows
-```
 
-24 zones average more than 6 rooms per dwelling. None average more than 8 per dwelling, so I must have done something wrong but am unsure. 
+-------------------------------------------------------------------
+      crim              zn             indus             chas      
+----------------- --------------- ---------------- ----------------
+ Min.  :0.02009    Min.  : 0.00    Min.  : 2.680    Min.  :0.0000  
+
+ 1st Qu.:0.33147   1st Qu.: 0.00   1st Qu.: 3.970   1st Qu.:0.0000 
+
+ Median :0.52014   Median : 0.00   Median : 6.200   Median :0.0000 
+
+  Mean :0.71879     Mean :13.62     Mean : 7.078     Mean :0.1538  
+
+ 3rd Qu.:0.57834   3rd Qu.:20.00   3rd Qu.: 6.200   3rd Qu.:0.0000 
+
+ Max.  :3.47428    Max.  :95.00    Max.  :19.580    Max.  :1.0000  
+-------------------------------------------------------------------
+
+Table: Table continues below
+
+ 
+----------------------------------------------------------------
+      nox              rm              age             dis      
+---------------- --------------- --------------- ---------------
+ Min.  :0.4161    Min.  :8.034    Min.  : 8.40    Min.  :1.801  
+
+ 1st Qu.:0.5040   1st Qu.:8.247   1st Qu.:70.40   1st Qu.:2.288 
+
+ Median :0.5070   Median :8.297   Median :78.30   Median :2.894 
+
+  Mean :0.5392     Mean :8.349     Mean :71.54     Mean :3.430  
+
+ 3rd Qu.:0.6050   3rd Qu.:8.398   3rd Qu.:86.50   3rd Qu.:3.652 
+
+ Max.  :0.7180    Max.  :8.780    Max.  :93.90    Max.  :8.907  
+----------------------------------------------------------------
+
+Table: Table continues below
+
+ 
+-------------------------------------------------------------------------------
+      rad              tax           ptratio          black          lstat     
+---------------- --------------- --------------- --------------- --------------
+ Min.  : 2.000    Min.  :224.0    Min.  :13.00    Min.  :354.6    Min.  :2.47  
+
+ 1st Qu.: 5.000   1st Qu.:264.0   1st Qu.:14.70   1st Qu.:384.5   1st Qu.:3.32 
+
+ Median : 7.000   Median :307.0   Median :17.40   Median :386.9   Median :4.14 
+
+  Mean : 7.462     Mean :325.1     Mean :16.36     Mean :385.2     Mean :4.31  
+
+ 3rd Qu.: 8.000   3rd Qu.:307.0   3rd Qu.:17.40   3rd Qu.:389.7   3rd Qu.:5.12 
+
+ Max.  :24.000    Max.  :666.0    Max.  :20.20    Max.  :396.9    Max.  :7.44  
+-------------------------------------------------------------------------------
+
+Table: Table continues below
+
+ 
+--------------
+     medv     
+--------------
+ Min.  :21.9  
+
+ 1st Qu.:41.7 
+
+ Median :48.3 
+
+  Mean :44.2  
+
+ 3rd Qu.:50.0 
+
+ Max.  :50.0  
+--------------
+
+64 suburbs average more than 7 rooms per dwelling and 13 have more than 8 rooms. For 8 rooms, Mean crime is .71, They are somewhat close to employment centers with a median of 6. Tax is centered around 300. Nox is around .5.
 
 
 

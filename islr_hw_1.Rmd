@@ -16,6 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(MASS)
 library(dplyr)
 library(ggplot2)
+library(pander)
 
 bos = Boston
 ```
@@ -70,45 +71,45 @@ As distance from employment centers increases, crime looks like it decreases.
 
 #d. 
 ```{r}
-zmsummary = bos %>% group_by(zn) %>% summarise(mcrime = mean(crim), mtax = mean(tax), mptratio = mean(ptratio))
-zmsummary
+ggplot(data=bos,aes(x=crim))+geom_histogram()
+ggplot(data=bos,aes(x=tax))+geom_histogram()
+ggplot(data=bos,aes(x=ptratio))+geom_histogram()
 ```
 
-Zone 20 has high crime, zone 45 has high tax, and zones 22 and 25 have a high ptratio. 
+It seems crime can go from 0 to close to 100, with numbers bigger than 20 being unusal. Tax can go from 150ish to 700, with 700 maybe not being unusual. The ptratio can go from 12.5 to close to 22.5, with 22.,5 being unusual.  
 
 #e. 
 ```{r}
-zmsummary2 = bos %>% group_by(zn) %>% summarise(charles = mean(chas))
-zmsummary2
-```
-Zone 20, 40, and 90 bound the charles river. 
+bosriver = bos %>% filter(chas==1)
 
+```
+35 neighborhoods border the river. 
 #f. 
 ```{r}
-median(bos$ptratio)
+median(bosriver$ptratio)
 ```
 
-The median ptratio is 19.05. 
+The median ptratio is 17.6.  
 
 #g. 
 ```{r}
-zmsummary3 = bos %>% group_by(zn) %>% summarise(mvo = median(medv))
-zmsummary3
+bos3 = bos %>% filter(medv == min(medv))
+bos3
 
-bos35 = bos %>% filter(zn == 35) %>% group_by(zn) %>% summarise(mcrim = mean(crim),mindus = mean(indus),mnox = mean(nox), mage= mean(age))
-bos35
 ```
 
 
-Zone 35 has the lowest median value of owner occupied homes. Mean crime is low, mean industrial proportion is 4.5. Mean nitrogen is .43. Mean age is 33.66.
+There are 2 suburbs that have a medv of 5. They both have a high ptratio, a high age at 100, high nox, and a close distance to employment centers. 
 
 #h.
 ```{r}
-zmsummary4 = bos %>% group_by(zn) %>% summarise(mrm = mean(rm))
-zmsummary4
+bos7rms = bos %>% filter(rm>=7)
+bos8rms = bos %>% filter(rm>=8)
+
+pander(summary(bos8rms))
 ```
 
-24 zones average more than 6 rooms per dwelling. None average more than 8 per dwelling, so I must have done something wrong but am unsure. 
+64 suburbs average more than 7 rooms per dwelling and 13 have more than 8 rooms. For 8 rooms, Mean crime is .71, They are somewhat close to employment centers with a median of 6. Tax is centered around 300. Nox is around .5.
 
 
 

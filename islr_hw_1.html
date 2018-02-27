@@ -138,8 +138,9 @@ $(document).ready(function () {
 ## 
 ##     intersect, setdiff, setequal, union</code></pre>
 <pre class="r"><code>library(ggplot2)
-
-bos = Boston</code></pre>
+library(pander)</code></pre>
+<pre><code>## Warning: package 'pander' was built under R version 3.4.3</code></pre>
+<pre class="r"><code>bos = Boston</code></pre>
 <div id="section" class="section level1">
 <h1>1.</h1>
 <ol style="list-style-type: lower-alpha">
@@ -187,95 +188,247 @@ bos = Boston</code></pre>
 </div>
 <div id="d." class="section level1">
 <h1>d.</h1>
-<pre class="r"><code>zmsummary = bos %&gt;% group_by(zn) %&gt;% summarise(mcrime = mean(crim), mtax = mean(tax), mptratio = mean(ptratio))
-zmsummary</code></pre>
-<pre><code>## # A tibble: 26 x 4
-##       zn     mcrime     mtax mptratio
-##    &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-##  1   0.0 4.86848648 449.1828 19.05780
-##  2  12.5 0.13718500 321.2000 16.31000
-##  3  17.5 0.01951000 216.0000 18.60000
-##  4  18.0 0.00632000 296.0000 15.30000
-##  5  20.0 0.41906952 245.0952 14.69524
-##  6  21.0 0.05887750 243.0000 16.80000
-##  7  22.0 0.20944700 330.0000 19.10000
-##  8  25.0 0.09733800 282.8000 19.42000
-##  9  28.0 0.03790667 270.0000 18.20000
-## 10  30.0 0.10414000 300.0000 16.60000
-## # ... with 16 more rows</code></pre>
-<p>Zone 20 has high crime, zone 45 has high tax, and zones 22 and 25 have a high ptratio.</p>
+<pre class="r"><code>ggplot(data=bos,aes(x=crim))+geom_histogram()</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<pre class="r"><code>ggplot(data=bos,aes(x=tax))+geom_histogram()</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<pre class="r"><code>ggplot(data=bos,aes(x=ptratio))+geom_histogram()</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>It seems crime can go from 0 to close to 100, with numbers bigger than 20 being unusal. Tax can go from 150ish to 700, with 700 maybe not being unusual. The ptratio can go from 12.5 to close to 22.5, with 22.,5 being unusual.</p>
 </div>
 <div id="e." class="section level1">
 <h1>e.</h1>
-<pre class="r"><code>zmsummary2 = bos %&gt;% group_by(zn) %&gt;% summarise(charles = mean(chas))
-zmsummary2</code></pre>
-<pre><code>## # A tibble: 26 x 2
-##       zn    charles
-##    &lt;dbl&gt;      &lt;dbl&gt;
-##  1   0.0 0.07526882
-##  2  12.5 0.00000000
-##  3  17.5 0.00000000
-##  4  18.0 0.00000000
-##  5  20.0 0.14285714
-##  6  21.0 0.00000000
-##  7  22.0 0.00000000
-##  8  25.0 0.00000000
-##  9  28.0 0.00000000
-## 10  30.0 0.00000000
-## # ... with 16 more rows</code></pre>
-<p>Zone 20, 40, and 90 bound the charles river.</p>
-</div>
-<div id="f." class="section level1">
-<h1>f.</h1>
-<pre class="r"><code>median(bos$ptratio)</code></pre>
-<pre><code>## [1] 19.05</code></pre>
-<p>The median ptratio is 19.05.</p>
+<pre class="r"><code>bosriver = bos %&gt;% filter(chas==1)</code></pre>
+<p>35 neighborhoods border the river. #f.</p>
+<pre class="r"><code>median(bosriver$ptratio)</code></pre>
+<pre><code>## [1] 17.6</code></pre>
+<p>The median ptratio is 17.6.</p>
 </div>
 <div id="g." class="section level1">
 <h1>g.</h1>
-<pre class="r"><code>zmsummary3 = bos %&gt;% group_by(zn) %&gt;% summarise(mvo = median(medv))
-zmsummary3</code></pre>
-<pre><code>## # A tibble: 26 x 2
-##       zn   mvo
-##    &lt;dbl&gt; &lt;dbl&gt;
-##  1   0.0 19.75
-##  2  12.5 19.90
-##  3  17.5 33.00
-##  4  18.0 24.00
-##  5  20.0 35.20
-##  6  21.0 21.95
-##  7  22.0 24.45
-##  8  25.0 23.10
-##  9  28.0 22.90
-## 10  30.0 22.75
-## # ... with 16 more rows</code></pre>
-<pre class="r"><code>bos35 = bos %&gt;% filter(zn == 35) %&gt;% group_by(zn) %&gt;% summarise(mcrim = mean(crim),mindus = mean(indus),mnox = mean(nox), mage= mean(age))
-bos35</code></pre>
-<pre><code>## # A tibble: 1 x 5
-##      zn      mcrim   mindus      mnox     mage
-##   &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1    35 0.03263333 4.546667 0.4392667 33.66667</code></pre>
-<p>Zone 35 has the lowest median value of owner occupied homes. Mean crime is low, mean industrial proportion is 4.5. Mean nitrogen is .43. Mean age is 33.66.</p>
+<pre class="r"><code>bos3 = bos %&gt;% filter(medv == min(medv))
+bos3</code></pre>
+<pre><code>##      crim zn indus chas   nox    rm age    dis rad tax ptratio  black
+## 1 38.3518  0  18.1    0 0.693 5.453 100 1.4896  24 666    20.2 396.90
+## 2 67.9208  0  18.1    0 0.693 5.683 100 1.4254  24 666    20.2 384.97
+##   lstat medv
+## 1 30.59    5
+## 2 22.98    5</code></pre>
+<p>There are 2 suburbs that have a medv of 5. They both have a high ptratio, a high age at 100, high nox, and a close distance to employment centers.</p>
 </div>
 <div id="h." class="section level1">
 <h1>h.</h1>
-<pre class="r"><code>zmsummary4 = bos %&gt;% group_by(zn) %&gt;% summarise(mrm = mean(rm))
-zmsummary4</code></pre>
-<pre><code>## # A tibble: 26 x 2
-##       zn      mrm
-##    &lt;dbl&gt;    &lt;dbl&gt;
-##  1   0.0 6.147922
-##  2  12.5 5.945100
-##  3  17.5 7.104000
-##  4  18.0 6.575000
-##  5  20.0 7.160190
-##  6  21.0 6.146750
-##  7  22.0 6.482400
-##  8  25.0 6.281200
-##  9  28.0 6.300667
-## 10  30.0 6.471667
-## # ... with 16 more rows</code></pre>
-<p>24 zones average more than 6 rooms per dwelling. None average more than 8 per dwelling, so I must have done something wrong but am unsure.</p>
+<pre class="r"><code>bos7rms = bos %&gt;% filter(rm&gt;=7)
+bos8rms = bos %&gt;% filter(rm&gt;=8)
+
+pander(summary(bos8rms))</code></pre>
+<table style="width:94%;">
+<caption>Table continues below</caption>
+<colgroup>
+<col width="25%"></col>
+<col width="22%"></col>
+<col width="23%"></col>
+<col width="23%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">crim</th>
+<th align="center">zn</th>
+<th align="center">indus</th>
+<th align="center">chas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Min. :0.02009</td>
+<td align="center">Min. : 0.00</td>
+<td align="center">Min. : 2.680</td>
+<td align="center">Min. :0.0000</td>
+</tr>
+<tr class="even">
+<td align="center">1st Qu.:0.33147</td>
+<td align="center">1st Qu.: 0.00</td>
+<td align="center">1st Qu.: 3.970</td>
+<td align="center">1st Qu.:0.0000</td>
+</tr>
+<tr class="odd">
+<td align="center">Median :0.52014</td>
+<td align="center">Median : 0.00</td>
+<td align="center">Median : 6.200</td>
+<td align="center">Median :0.0000</td>
+</tr>
+<tr class="even">
+<td align="center">Mean :0.71879</td>
+<td align="center">Mean :13.62</td>
+<td align="center">Mean : 7.078</td>
+<td align="center">Mean :0.1538</td>
+</tr>
+<tr class="odd">
+<td align="center">3rd Qu.:0.57834</td>
+<td align="center">3rd Qu.:20.00</td>
+<td align="center">3rd Qu.: 6.200</td>
+<td align="center">3rd Qu.:0.0000</td>
+</tr>
+<tr class="even">
+<td align="center">Max. :3.47428</td>
+<td align="center">Max. :95.00</td>
+<td align="center">Max. :19.580</td>
+<td align="center">Max. :1.0000</td>
+</tr>
+</tbody>
+</table>
+<table style="width:90%;">
+<caption>Table continues below</caption>
+<colgroup>
+<col width="23%"></col>
+<col width="22%"></col>
+<col width="22%"></col>
+<col width="22%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">nox</th>
+<th align="center">rm</th>
+<th align="center">age</th>
+<th align="center">dis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Min. :0.4161</td>
+<td align="center">Min. :8.034</td>
+<td align="center">Min. : 8.40</td>
+<td align="center">Min. :1.801</td>
+</tr>
+<tr class="even">
+<td align="center">1st Qu.:0.5040</td>
+<td align="center">1st Qu.:8.247</td>
+<td align="center">1st Qu.:70.40</td>
+<td align="center">1st Qu.:2.288</td>
+</tr>
+<tr class="odd">
+<td align="center">Median :0.5070</td>
+<td align="center">Median :8.297</td>
+<td align="center">Median :78.30</td>
+<td align="center">Median :2.894</td>
+</tr>
+<tr class="even">
+<td align="center">Mean :0.5392</td>
+<td align="center">Mean :8.349</td>
+<td align="center">Mean :71.54</td>
+<td align="center">Mean :3.430</td>
+</tr>
+<tr class="odd">
+<td align="center">3rd Qu.:0.6050</td>
+<td align="center">3rd Qu.:8.398</td>
+<td align="center">3rd Qu.:86.50</td>
+<td align="center">3rd Qu.:3.652</td>
+</tr>
+<tr class="even">
+<td align="center">Max. :0.7180</td>
+<td align="center">Max. :8.780</td>
+<td align="center">Max. :93.90</td>
+<td align="center">Max. :8.907</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>Table continues below</caption>
+<colgroup>
+<col width="20%"></col>
+<col width="19%"></col>
+<col width="19%"></col>
+<col width="19%"></col>
+<col width="19%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">rad</th>
+<th align="center">tax</th>
+<th align="center">ptratio</th>
+<th align="center">black</th>
+<th align="center">lstat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Min. : 2.000</td>
+<td align="center">Min. :224.0</td>
+<td align="center">Min. :13.00</td>
+<td align="center">Min. :354.6</td>
+<td align="center">Min. :2.47</td>
+</tr>
+<tr class="even">
+<td align="center">1st Qu.: 5.000</td>
+<td align="center">1st Qu.:264.0</td>
+<td align="center">1st Qu.:14.70</td>
+<td align="center">1st Qu.:384.5</td>
+<td align="center">1st Qu.:3.32</td>
+</tr>
+<tr class="odd">
+<td align="center">Median : 7.000</td>
+<td align="center">Median :307.0</td>
+<td align="center">Median :17.40</td>
+<td align="center">Median :386.9</td>
+<td align="center">Median :4.14</td>
+</tr>
+<tr class="even">
+<td align="center">Mean : 7.462</td>
+<td align="center">Mean :325.1</td>
+<td align="center">Mean :16.36</td>
+<td align="center">Mean :385.2</td>
+<td align="center">Mean :4.31</td>
+</tr>
+<tr class="odd">
+<td align="center">3rd Qu.: 8.000</td>
+<td align="center">3rd Qu.:307.0</td>
+<td align="center">3rd Qu.:17.40</td>
+<td align="center">3rd Qu.:389.7</td>
+<td align="center">3rd Qu.:5.12</td>
+</tr>
+<tr class="even">
+<td align="center">Max. :24.000</td>
+<td align="center">Max. :666.0</td>
+<td align="center">Max. :20.20</td>
+<td align="center">Max. :396.9</td>
+<td align="center">Max. :7.44</td>
+</tr>
+</tbody>
+</table>
+<table style="width:19%;">
+<colgroup>
+<col width="19%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">medv</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Min. :21.9</td>
+</tr>
+<tr class="even">
+<td align="center">1st Qu.:41.7</td>
+</tr>
+<tr class="odd">
+<td align="center">Median :48.3</td>
+</tr>
+<tr class="even">
+<td align="center">Mean :44.2</td>
+</tr>
+<tr class="odd">
+<td align="center">3rd Qu.:50.0</td>
+</tr>
+<tr class="even">
+<td align="center">Max. :50.0</td>
+</tr>
+</tbody>
+</table>
+<p>64 suburbs average more than 7 rooms per dwelling and 13 have more than 8 rooms. For 8 rooms, Mean crime is .71, They are somewhat close to employment centers with a median of 6. Tax is centered around 300. Nox is around .5.</p>
 </div>
 
 
