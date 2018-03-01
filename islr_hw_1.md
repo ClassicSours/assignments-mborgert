@@ -1,55 +1,23 @@
-# islr assignment 1
-Mitch Borgert  
-2/26/18  
+---
+title: "islr assignment 1"
+author: "Mitch Borgert"
+date: "2/26/18"
+output: 
+  html_document: 
+    keep_md: yes  
+  
+---
 
 
 
 
-```r
-library(MASS)
-```
-
-```
-## Warning: package 'MASS' was built under R version 3.4.3
-```
-
-```r
-library(dplyr)
-```
-
-```
-## 
-## Attaching package: 'dplyr'
-```
-
-```
-## The following object is masked from 'package:MASS':
-## 
-##     select
-```
-
-```
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
 
 ```r
-library(ggplot2)
-library(pander)
-```
+suppressMessages(library(MASS))
+suppressMessages(library(dplyr))
+suppressMessages(library(ggplot2))
+suppressMessages(library(pander))
 
-```
-## Warning: package 'pander' was built under R version 3.4.3
-```
-
-```r
 bos = Boston
 ```
 
@@ -83,37 +51,38 @@ bos = Boston
   
   
   
-#10 b. 
+#10 b.
+
 
 ```r
 ggplot(data=bos,aes(x=crim,y=nox)) + geom_point()
 ```
 
-![](islr_hw_1_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+![](islr_hw_1_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
 ```r
 ggplot(data=bos,aes(x=crim,y=rm)) + geom_point()
 ```
 
-![](islr_hw_1_files/figure-html/unnamed-chunk-2-2.png)<!-- -->
+![](islr_hw_1_files/figure-html/unnamed-chunk-4-2.png)<!-- -->
 
 ```r
 ggplot(data=bos,aes(x=age,y=nox)) + geom_point()
 ```
 
-![](islr_hw_1_files/figure-html/unnamed-chunk-2-3.png)<!-- -->
+![](islr_hw_1_files/figure-html/unnamed-chunk-4-3.png)<!-- -->
 
 ```r
 ggplot(data=bos,aes(x=tax,y=nox)) + geom_point()
 ```
 
-![](islr_hw_1_files/figure-html/unnamed-chunk-2-4.png)<!-- -->
+![](islr_hw_1_files/figure-html/unnamed-chunk-4-4.png)<!-- -->
 
 ```r
 ggplot(data=bos,aes(x=dis,y=indus)) + geom_point()
 ```
 
-![](islr_hw_1_files/figure-html/unnamed-chunk-2-5.png)<!-- -->
+![](islr_hw_1_files/figure-html/unnamed-chunk-4-5.png)<!-- -->
 
 It looks like as the age of the home increase, the nitrogen oxide concentration increases. As tax increases, so does nitrogen oxide, it appears. As the distance from 5 Boston employment centers increases, the proportion of non-retail busnesses decreases. 
 
@@ -123,11 +92,12 @@ It looks like as the age of the home increase, the nitrogen oxide concentration 
 ggplot(data=bos,aes(x=dis,y=crim)) + geom_point()
 ```
 
-![](islr_hw_1_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+![](islr_hw_1_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
 As distance from employment centers increases, crime looks like it decreases. 
 
 #d. 
+
 
 ```r
 ggplot(data=bos,aes(x=crim))+geom_histogram()
@@ -137,7 +107,7 @@ ggplot(data=bos,aes(x=crim))+geom_histogram()
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-![](islr_hw_1_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+![](islr_hw_1_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
 
 ```r
 ggplot(data=bos,aes(x=tax))+geom_histogram()
@@ -147,7 +117,7 @@ ggplot(data=bos,aes(x=tax))+geom_histogram()
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-![](islr_hw_1_files/figure-html/unnamed-chunk-4-2.png)<!-- -->
+![](islr_hw_1_files/figure-html/unnamed-chunk-7-2.png)<!-- -->
 
 ```r
 ggplot(data=bos,aes(x=ptratio))+geom_histogram()
@@ -157,7 +127,7 @@ ggplot(data=bos,aes(x=ptratio))+geom_histogram()
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-![](islr_hw_1_files/figure-html/unnamed-chunk-4-3.png)<!-- -->
+![](islr_hw_1_files/figure-html/unnamed-chunk-7-3.png)<!-- -->
 
 It seems crime can go from 0 to close to 100, with numbers bigger than 20 being unusal. Tax can go from 150ish to 700, with 700 maybe not being unusual. The ptratio can go from 12.5 to close to 22.5, with 22.,5 being unusual.  
 
@@ -282,6 +252,7 @@ Table: Table continues below
 --------------
 
 64 suburbs average more than 7 rooms per dwelling and 13 have more than 8 rooms. For 8 rooms, Mean crime is .71, They are somewhat close to employment centers with a median of 6. Tax is centered around 300. Nox is around .5.
+
 
 
 

@@ -12,11 +12,15 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r, eval = FALSE, echo = FALSE}
+when loading libraries either echo=false the library
+or use ?suppressMessages so they don't output warnings
+```
 ```{r}
-library(MASS)
-library(dplyr)
-library(ggplot2)
-library(pander)
+suppressMessages(library(MASS))
+suppressMessages(library(dplyr))
+suppressMessages(library(ggplot2))
+suppressMessages(library(pander))
 
 bos = Boston
 ```
@@ -51,7 +55,11 @@ bos = Boston
   
   
   
-#10 b. 
+#10 b.
+```{r, eval = FALSE, echo = FALSE}
+try experimenting with the gridExtra package to create multiple plots in one
+additionaly try messing around with fig.width = and fig.height = options in the code chunk header
+```
 ```{r}
 ggplot(data=bos,aes(x=crim,y=nox)) + geom_point()
 ggplot(data=bos,aes(x=crim,y=rm)) + geom_point()
@@ -70,6 +78,9 @@ ggplot(data=bos,aes(x=dis,y=crim)) + geom_point()
 As distance from employment centers increases, crime looks like it decreases. 
 
 #d. 
+```{r, eval = FALSE, echo = FALSE}
+when using geom_histogram don't forget to include a bin width or supress warning messages
+```
 ```{r}
 ggplot(data=bos,aes(x=crim))+geom_histogram()
 ggplot(data=bos,aes(x=tax))+geom_histogram()
@@ -113,6 +124,9 @@ pander(summary(bos8rms))
 
 
 
+```{r, eval = FALSE, echo = FALSE}
+great work, i'm not sure the exact reason but when I learned R I used '<-' instead of '=' for assignment.  Not really sure what the difference is ut its something to consider.  Also please include the questions that you are answering instead of just the number.  An answer without a question is just a sentence with no context!
+```
 
 
 
