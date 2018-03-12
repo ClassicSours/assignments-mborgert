@@ -1,0 +1,145 @@
+---
+title: "islr assignment 1"
+author: "Mitch Borgert"
+date: "2/26/18"
+output: 
+  html_document: 
+    keep_md: yes  
+  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, eval = FALSE, echo = FALSE}
+when loading libraries either echo=false the library
+or use ?suppressMessages so they don't output warnings
+```
+```{r}
+suppressMessages(library(MASS))
+suppressMessages(library(dplyr))
+suppressMessages(library(ggplot2))
+suppressMessages(library(pander))
+
+bos = Boston
+```
+
+
+#1.
+  
+  a. Since the sample size is large there will be a smaller variance. We can use a flexible method here since we are starting with a low variance.
+  
+  b. Since the variance will be high for this sample, we should use a less flexible method so we dont significantly increase the variance. 
+  
+  c. Since the relationship is nonlinear we should use a more flexible method since linear regression is not very flexible. 
+  
+  d. Since the variance of the error terms is high we should use a less flexible method so we don't significantly increase the variance. 
+  
+
+#2.
+  
+  a. We would use regression and are interested in inference. P is the ceos' salary and N is the firms. 
+  
+  b. This is a classification problem and we are interested in prediction. P is success/failure and N is the sample products. 
+  
+  c. This is a regression problem and we are interested om prediction. P is % change in the USD/Euro market and n would be the stock market data. 
+  
+#4. 
+
+  a. One example would be a state voting for one political party or the other. The response would be how they vote and the predictors could be demographics or a survey or responses. Our goal would be prediction. Another example could be predicting if opening a store will get customers. The response would be yes or no and the predictors could be the success of other stores in the area. Our goal would be prediction. A final example could be predicting if students will pass a class. The response will be yes or no and the predictors could be previous grades. 
+  
+  b. We could use regression to predict the height that plants grow based on how much nitrogen they reciece. The response would be height and the predictors would be nitrogen amount. This would be a prediction problem. Another example of regression would be predicting the age that someone starts smoking. The age would be the response and a bunch of demographics could be the predictors. One more use of regression would be predicting future salary. Salary would be the response and the predictors could be education, current salary, and seniority. 
+  
+  c. You could use cluster sampling when try to see how good students grades are. The clusters can be by freshman, sophomore, junior, senior, and graduate. The response would be grades and the predictors would be major and demographic variables. Another could be if a disease effects some trees. One cluster could trees near water and the other could be trees surrounded by land. The response would be if it is diseased and the predictors could be location, type of tree, and age. One more example could be predicting how much money people spend at a business. The clusters could be by groups of income. The response would be how much they spend and the predictors would be demographic variables and how much they go shopping.  
+  
+  
+  
+#10 b.
+```{r, eval = FALSE, echo = FALSE}
+try experimenting with the gridExtra package to create multiple plots in one
+additionaly try messing around with fig.width = and fig.height = options in the code chunk header
+```
+```{r}
+ggplot(data=bos,aes(x=crim,y=nox)) + geom_point()
+ggplot(data=bos,aes(x=crim,y=rm)) + geom_point()
+ggplot(data=bos,aes(x=age,y=nox)) + geom_point()
+ggplot(data=bos,aes(x=tax,y=nox)) + geom_point()
+ggplot(data=bos,aes(x=dis,y=indus)) + geom_point()
+```
+
+It looks like as the age of the home increase, the nitrogen oxide concentration increases. As tax increases, so does nitrogen oxide, it appears. As the distance from 5 Boston employment centers increases, the proportion of non-retail busnesses decreases. 
+
+#c. 
+```{r}
+ggplot(data=bos,aes(x=dis,y=crim)) + geom_point()
+```
+
+As distance from employment centers increases, crime looks like it decreases. 
+
+#d. 
+```{r, eval = FALSE, echo = FALSE}
+when using geom_histogram don't forget to include a bin width or supress warning messages
+```
+```{r}
+ggplot(data=bos,aes(x=crim))+geom_histogram()
+ggplot(data=bos,aes(x=tax))+geom_histogram()
+ggplot(data=bos,aes(x=ptratio))+geom_histogram()
+```
+
+It seems crime can go from 0 to close to 100, with numbers bigger than 20 being unusal. Tax can go from 150ish to 700, with 700 maybe not being unusual. The ptratio can go from 12.5 to close to 22.5, with 22.,5 being unusual.  
+
+#e. 
+```{r}
+bosriver = bos %>% filter(chas==1)
+
+```
+35 neighborhoods border the river. 
+#f. 
+```{r}
+median(bosriver$ptratio)
+```
+
+The median ptratio is 17.6.  
+
+#g. 
+```{r}
+bos3 = bos %>% filter(medv == min(medv))
+bos3
+
+```
+
+
+There are 2 suburbs that have a medv of 5. They both have a high ptratio, a high age at 100, high nox, and a close distance to employment centers. 
+
+#h.
+```{r}
+bos7rms = bos %>% filter(rm>=7)
+bos8rms = bos %>% filter(rm>=8)
+
+pander(summary(bos8rms))
+```
+
+64 suburbs average more than 7 rooms per dwelling and 13 have more than 8 rooms. For 8 rooms, Mean crime is .71, They are somewhat close to employment centers with a median of 6. Tax is centered around 300. Nox is around .5.
+
+
+
+```{r, eval = FALSE, echo = FALSE}
+great work, i'm not sure the exact reason but when I learned R I used '<-' instead of '=' for assignment.  Not really sure what the difference is ut its something to consider.  Also please include the questions that you are answering instead of just the number.  An answer without a question is just a sentence with no context!
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
