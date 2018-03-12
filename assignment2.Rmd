@@ -1,0 +1,133 @@
+---
+title: "Hw2"
+author: "Mitch Borgert"
+date: "February 17, 2018"
+output: 
+  pdf_document: default
+  keep_md: yes
+
+
+---
+
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(modelr)
+library(ggplot2)
+library(tidyr)
+```
+
+
+#23.2.1 1. One downside of the linear model is that it is sensitive to unusual values because the distance incorporates a squared term. Fit a linear model to the simulated data below, and visualise the results. Rerun a few times to generate different simulated datasets. What do you notice about the model?
+
+```{r}
+sim1a <- tibble(
+  x = rep(1:10, each = 3),
+  y = x * 1.5 + 6 + rt(length(x), df = 2)
+)
+
+model1 = lm(x~y,data=sim1a)
+
+ggplot(sim1a, aes(x = x,y = y)) + geom_point() + geom_smooth(method='lm',formula=y~x,se = FALSE)
+```
+
+One outlier can shift the line away from where it really should be. 
+
+#23.2.1 2. One way to make linear models more robust is to use a different distance measure. For example, instead of root-mean-squared distance, you could use mean-absolute distance:
+
+
+```{r}
+model1 <- function(a, data) {
+  a[1] + data$x * a[2]
+}
+
+measure_distance <- function(mod, data) {
+  diff <- data$y - model1(mod, data)
+  mean(abs(diff))
+}
+
+measure_distance2 <- function(mod, data) {
+  diff <- data$y - model1(mod, data)
+  sqrt(mean(diff ^ 2))
+}
+
+best1 <- optim(c(0,0), measure_distance, data = sim1a)
+best2 <- optim(c(0,0), measure_distance2, data = sim1a)
+
+ggplot(sim1a, aes(x, y)) + geom_point(size = 2, colour = "grey30") + geom_abline(intercept = best1$par[1], slope = best1$par[2], color = "red")+ geom_abline(intercept = best2$par[1],slope = best2$par[2], color = "cyan")
+
+```
+
+The model that uses the mean of the absolute difference is less effected by outliers than the model that squares the differences. 
+
+
+#23.3.3 1.Instead of using lm() to fit a straight line, you can use loess() to fit a smooth curve. Repeat the process of model fitting, grid generation, predictions, and visualisation on sim1 using loess() instead of lm(). How does the result compare to geom_smooth()?
+
+```{r}
+fit1 <- lm(y~x, data = sim1)
+fit2 <- loess(y~x, data = sim1,degree = 2)
+
+grid <- sim1 %>% data_grid(x)
+grid1 <- grid %>% add_predictions(fit1)
+sim1_1 <- sim1 %>% add_residuals(fit1)
+
+grid2 <- grid %>% add_predictions(fit2)
+sim1_2 <- sim1 %>% add_residuals(fit2)
+
+ggplot(sim1,aes(x=x))+geom_point(aes(y=y))+geom_line(data = grid1, aes(y = pred), color = 'red')+geom_smooth(data = grid2, aes(y = pred),color = 'cyan')
+
+```
+
+The loess line is close to the normal linear line, but it is pulled more toward outliers. If there were extreme outliers in this data the loess line would be less accurate.
+
+#23.3.3. 3. 
+```{r}
+?geom_ref_line
+```
+
+geom_ref_line is from the modelr package. It adds a reference line to the graph and is useful for visually looking at the trend in the residuals. 
+
+
+#23.3.3. 4. Why might you want to look at a frequency polygon of absolute residuals? What are the pros and cons compared to looking at the raw residuals?
+
+You want to check the absolute residuals because it helps to see the overall quality of the prediction but it won’t give you the hint about the distribution of residuals with respect to 0. 
+
+#23.4.5 1. 
+
+```{r}
+mod1 <- lm(y~x - 1, data = sim2) # Why -1 ? What does that do? I used "0 + x", I don't even know if what I did was right
+summary(mod1)
+mod2 <- lm(y~x, data = sim2)
+summary(mod2)
+grid1 <- sim2 %>% data_grid(x) %>% gather_predictions(mod1,mod2)
+sim2 %>%ggplot(aes(x))+geom_point(aes(y=y))+geom_point(data = grid1, aes(y = pred),color = "red",size = 4)+facet_grid(~model)
+```
+
+The equations for the models change but the prediction stays the same. 
+
+#23.4.5. 3.
+
+```{r}
+sim3 = sim3
+sim3 <- sim3 %>%mutate(present = 1)%>%spread(x2,present,fill=0) #splits a catagorical column into a bunch with 1 or 0 to say its there for the person
+mod1 <- lm(y ~ x1 + a + b + c + d, data = sim3)
+summary(mod1)
+mod2 <- lm(y ~ x1*a*b*c*d, data = sim3)
+summary(mod2)
+```
+
+Is this what this problem wants?
+I also had no clue what the problem was asking for. Some of the questions are too vague.
+
+#23.4.5. 4. 
+
+```{r}
+mod1 <- lm(y ~ x1 + x2, data = sim4)
+mod2 <- lm(y ~ x1 * x2, data = sim4)
+par(plot(mod1), mfrow = c(2,2))
+par(plot(mod2), mfrow = c(2,2))
+
+```
+
+It looks like model 2 is better, the residuals care closer to normal than on model 1. 
+
+Very concise, straightforward, and easy to follow. I spell checked and added a few comments.

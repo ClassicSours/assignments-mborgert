@@ -80,9 +80,7 @@ is_readable <- function(x) file.access(x, 4) == 0
 ?file.access
 ```
 
-```
-## starting httpd help server ... done
-```
+
 This is a function to test if a file is readable.
 
 _Describe one time where you wish you had written a function, but didn't._
@@ -142,8 +140,7 @@ f3(555,"dootfsdfs")
 
 
 _What does "Functions are for humans and computers" mean to you?_
-<span style="color:red">answer missing</span>
-
+?
 ### 19.4 Conditional execution
 Answer any 3
 1. 
@@ -244,7 +241,9 @@ centre(x,"mean")
 ```
 
 ```
-## [1] 0.06786185
+
+## [1] 0.2281299
+
 ```
 
 ### 19.5 Function arguments
@@ -324,7 +323,9 @@ last.fun = function(x){
 even.fun = function(x){
   leng = length(x)
   vec = list()
-  for(i in leng){
+
+  for(i in leng){ #can be written as i in 1:length(x)
+
     if(i %% 2 == 0){
       vec[[i]] = x
     }
@@ -337,7 +338,7 @@ notlast.fun = function(x){
 }
 
 even.fun = function(x){
-  y = 2*x 
+  y = 2*x
   c(y)
 }
 ```
@@ -410,7 +411,9 @@ out[100]
 ```
 
 ```
-## [1] 51.07759
+
+## [1] 48.73187
+
 ```
 
 ```r
@@ -418,7 +421,9 @@ sum(x)
 ```
 
 ```
-## [1] 51.07759
+
+## [1] 48.73187
+
 ```
 
 ```r
@@ -429,7 +434,6 @@ sum(x)
 ### 21.3: For Loop Variations
 create a list with each dataframe as an entry then data.frame( each entry in the list )
 
-<span style="color:red">answer missing</span>
 
 ### 21.4: For loops vs functionals
 
@@ -474,19 +478,21 @@ map(-2:2, rnorm, n = 5)
 
 ```
 ## [[1]]
-## [1] -1.4464461 -0.9832833 -2.3655465 -1.9183185 -1.9748368
+
+## [1] -2.407566 -1.725863 -1.581053 -2.131105 -2.128014
 ## 
 ## [[2]]
-## [1] -0.8194392 -1.6222657 -1.5196654 -0.1510268 -1.3323436
+## [1] -0.9297521 -0.5143648 -3.5012860 -1.8442973 -0.9630289
 ## 
 ## [[3]]
-## [1] -1.9497651  0.3714242  0.6844355 -0.2529109 -1.0534907
+## [1]  0.7112923  1.2257536  1.1623177  2.4287940 -0.3696914
 ## 
 ## [[4]]
-## [1]  1.5992077  1.3182469  2.3888906  0.8062082 -0.2821944
+## [1] -0.06616529  2.45985506  1.36400753  1.26422396  0.50466290
 ## 
 ## [[5]]
-## [1] 1.953882 1.286264 1.453376 3.034736 3.796654
+## [1] 1.507129 2.267760 2.766963 2.545885 2.484709
+
 ```
 
 ```r
@@ -502,7 +508,6 @@ map_dbl(-2:2, rnorm, n = 5)
 ```
 The first creates 5x5 rnorm numbers. The second does not work because of something to do with doubles. 
 
-<span style="color:red">answer missing</span>
 
 ----
 

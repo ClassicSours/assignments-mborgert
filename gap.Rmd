@@ -1,0 +1,19 @@
+---
+title: "gap"
+output: html_document
+---
+
+
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(knitr)
+
+gap <- read.csv(url("https://raw.githubusercontent.com/swcarpentry/r-novice-gapminder/gh-pages/_episodes_rmd/data/gapminder-FiveYearData.csv"))
+
+for (var in unique(gap$country)) {
+  print( ggplot(gap[gap$country==var,], aes(year, lifeExp)) + geom_point() + ggtitle(var) )
+}
+
+```
