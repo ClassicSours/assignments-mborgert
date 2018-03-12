@@ -7,6 +7,8 @@ output:
     keep_md: yes
 ---
 
+<span style="color:blue">some *blue* text</span>
+
 # Ch 18: Pipes
 
 _Demonstrate the use of the regular pipe (`%>%`) and the "explosion" operator (`%$%`) in some example_
@@ -77,6 +79,8 @@ This tells you whether a file is a directory.
 is_readable <- function(x) file.access(x, 4) == 0
 ?file.access
 ```
+
+
 This is a function to test if a file is readable.
 
 _Describe one time where you wish you had written a function, but didn't._
@@ -237,7 +241,9 @@ centre(x,"mean")
 ```
 
 ```
+
 ## [1] 0.2281299
+
 ```
 
 ### 19.5 Function arguments
@@ -317,7 +323,9 @@ last.fun = function(x){
 even.fun = function(x){
   leng = length(x)
   vec = list()
+
   for(i in leng){ #can be written as i in 1:length(x)
+
     if(i %% 2 == 0){
       vec[[i]] = x
     }
@@ -344,6 +352,7 @@ I drew the lists.
 _Describe at least two differences between a `data.frame` and a `tibble`_
 
 All elements must be vectors. All elements must be the same length. 
+
 ----
 
 # Chapter 21: Iteration
@@ -402,7 +411,9 @@ out[100]
 ```
 
 ```
+
 ## [1] 48.73187
+
 ```
 
 ```r
@@ -410,7 +421,9 @@ sum(x)
 ```
 
 ```
+
 ## [1] 48.73187
+
 ```
 
 ```r
@@ -420,6 +433,7 @@ sum(x)
 
 ### 21.3: For Loop Variations
 create a list with each dataframe as an entry then data.frame( each entry in the list )
+
 
 ### 21.4: For loops vs functionals
 
@@ -464,6 +478,7 @@ map(-2:2, rnorm, n = 5)
 
 ```
 ## [[1]]
+
 ## [1] -2.407566 -1.725863 -1.581053 -2.131105 -2.128014
 ## 
 ## [[2]]
@@ -477,6 +492,7 @@ map(-2:2, rnorm, n = 5)
 ## 
 ## [[5]]
 ## [1] 1.507129 2.267760 2.766963 2.545885 2.484709
+
 ```
 
 ```r
