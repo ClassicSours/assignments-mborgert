@@ -1,0 +1,81 @@
+---
+title: "islr ch 4"
+author: "mitch borgert"
+date: "March 11, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#q5 
+##a. If the Bayes decision boundary is linear, do we expect LDA or QDA to perform better on the training set? On the test set?
+
+we expect QDA to perform better on the training set because of its higher flexiblity. We expect LDA to perform better on the test set than QDA, because QDA could overfit the decision boundary.
+
+##b. If the Bayes decision boundary is non-linear, do we expect LDA or QDA to perform better on the training set? On the test set?
+We expect QDA to perform better both sets.
+
+##c. In general, as the sample size n increases, do we expect the test prediction accuracy of QDA relative to LDA to improve, decline, or be unchanged? Why?
+
+QDA is recommended if the training set is very large, so we would expect the accuracy to be better. QDA already has a high variance. 
+
+##d. True or False: Even if the Bayes decision boundary for a given problem is linear, we will probably achieve a superior test error rate using QDA rather than LDA because QDA is flexible enough to model a linear decision boundary. Justify your answer
+
+False. QDA may lead to an overfit. 
+
+```{r}
+library(ISLR)
+library(MASS)
+library(magrittr)
+library(class)
+library(dplyr)
+```
+
+```{r}
+#making indicator variable 
+bos = Boston
+crim01 <- rep(0, length(bos$crim))
+crim01[bos$crim > median(bos$crim)] <- 1
+bos2 <- data.frame(Boston, crim01)
+
+#making indexes for training and test data, split into two
+train <- 1:(length(bos$crim) / 2)
+test <- (length(bos$crim) / 2 + 1):length(bos$crim)
+bos.train <- bos2[train, ]
+bos.test <- bos2[test, ]
+crim01.test <- bos2$crim01[test]
+
+#glm
+bos.glm <- glm(crim01 ~ zn+nox+age+dis+rad+tax+ptratio+black+medv, data = bos2, family = binomial,subset=train)
+summary(bos.glm)
+
+probs <- predict(bos.glm, bos.test, type = "response")
+pred.glm <- rep(0, length(probs))
+pred.glm[probs > 0.5] <- 1
+table(pred.glm, crim01.test)
+
+mean(pred.glm != crim01.test) #gets test error rate
+
+#lda
+bos.lda <- lda(crim01 ~ zn+nox+age+dis+rad+tax+ptratio+black+medv, data = bos2, family = binomial,subset=train)
+pred.lda <- predict(bos.lda, bos.test)
+table(pred.lda$class, crim01.test)
+
+mean(pred.lda$class != crim01.test)
+
+
+#knn
+attach(bos2)
+train.X <- cbind(zn, indus, chas, nox, rm, age, dis, rad, tax, ptratio, black, lstat, medv)[train, ]
+test.X <- cbind(zn, indus, chas, nox, rm, age, dis, rad, tax, ptratio, black, lstat, medv)[test, ]
+train.crim01 <- crim01[train]
+set.seed(1)
+pred.knn <- knn(train.X, test.X, train.crim01, k = 10)
+table(pred.knn, crim01.test)
+
+mean(pred.knn != crim01.test)
+```
+
+K nearest neighbords has the lowest rate of error. 
