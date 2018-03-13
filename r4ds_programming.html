@@ -200,6 +200,7 @@ final_number_remover(c(1,2,3,4))</code></pre>
 f3(555,&quot;dootfsdfs&quot;)</code></pre>
 <pre><code>## [1] &quot;dootfsdfs&quot;</code></pre>
 <pre class="r"><code>?rep</code></pre>
+
 <p><em>What does “Functions are for humans and computers” mean to you?</em> ? ### 19.4 Conditional execution Answer any 3 1.</p>
 <pre class="r"><code>?ifelse
 x = c(6:-4)
@@ -255,7 +256,9 @@ switch(x,
 }
 x = rnorm(10)
 centre(x,&quot;mean&quot;)</code></pre>
+
 <pre><code>## [1] 0.2281299</code></pre>
+
 </div>
 <div id="function-arguments" class="section level3">
 <h3>19.5 Function arguments</h3>
@@ -315,6 +318,7 @@ centre(x,&quot;mean&quot;)</code></pre>
 even.fun = function(x){
   leng = length(x)
   vec = list()
+
   for(i in leng){ #can be written as i in 1:length(x)
     if(i %% 2 == 0){
       vec[[i]] = x
@@ -378,9 +382,11 @@ for (i in 2:length(x)) {
 
 
 out[100]</code></pre>
+
 <pre><code>## [1] 48.73187</code></pre>
 <pre class="r"><code>sum(x)</code></pre>
 <pre><code>## [1] 48.73187</code></pre>
+
 <pre class="r"><code>?sum</code></pre>
 </div>
 <div id="for-loop-variations" class="section level3">
@@ -415,6 +421,7 @@ out[100]</code></pre>
 ##     set_names</code></pre>
 <pre class="r"><code>map(-2:2, rnorm, n = 5)</code></pre>
 <pre><code>## [[1]]
+
 ## [1] -2.407566 -1.725863 -1.581053 -2.131105 -2.128014
 ## 
 ## [[2]]
@@ -428,6 +435,7 @@ out[100]</code></pre>
 ## 
 ## [[5]]
 ## [1] 1.507129 2.267760 2.766963 2.545885 2.484709</code></pre>
+
 <pre class="r"><code>map_dbl(-2:2, rnorm, n = 5)</code></pre>
 <pre><code>## Error: Result 1 is not a length 1 atomic vector</code></pre>
 <pre class="r"><code>?map_dbl</code></pre>
