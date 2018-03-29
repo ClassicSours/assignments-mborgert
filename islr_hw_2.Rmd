@@ -1,0 +1,155 @@
+---
+title: "islr hw 2"
+author: "mitch borgert"
+date: "March 4, 2018"
+output: 
+  html_document: 
+    keep_md: yes  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(MASS)
+library(dplyr)
+library(ggplot2)
+library(pander)
+library(gridExtra)
+
+bos = Boston
+?Boston
+```
+
+#4
+a. Since the relationship is linear we would expect the RSS to be close to 0. Then we would expect the cubic regression RSS to be higher since the true relationship is linear. 
+
+b. We are not sure since the test data could have a different relationship from the training data.
+
+c. I don't think that there is enough information to determine which RSS is lower since we do not know the relationship of the data. 
+
+d. Once again, we don't know for the same reason as above. 
+
+
+#15
+
+```{r}
+lm1 = lm(crim~zn,data=bos)
+pander(summary(lm1))
+
+lm2 = lm(crim~indus,data=bos)
+pander(summary(lm2))
+a2 = ggplot(bos,aes(x=indus,y=crim))+geom_point()
+
+lm3 = lm(crim~chas,data=bos)
+pander(summary(lm3))
+
+lm4 = lm(crim~nox,data=bos)
+pander(summary(lm4))
+a3 = ggplot(bos,aes(x=nox,y=crim))+geom_point()
+
+lm5 = lm(crim~rm,data=bos)
+pander(summary(lm5))
+a4 = ggplot(bos,aes(x=rm,y=crim))+geom_point()
+
+lm6 = lm(crim~age,data=bos)
+pander(summary(lm6))
+a5 = ggplot(bos,aes(x=age,y=crim))+geom_point()
+
+lm7 = lm(crim~dis,data=bos)
+pander(summary(lm7))
+a6 = ggplot(bos,aes(x=dis,y=crim))+geom_point()
+
+lm8 = lm(crim~tax,data=bos)
+pander(summary(lm8))
+
+lm9 = lm(crim~ptratio,data=bos)
+pander(summary(lm9))
+a1 = ggplot(bos,aes(x=ptratio,y=crim))+geom_point()
+
+lm10 = lm(crim~black,data=bos)
+pander(summary(lm10))
+a7 = ggplot(bos,aes(x=black,y=crim))+geom_point()
+a7
+
+lm11 = lm(crim~lstat,data=bos)
+pander(summary(lm11))
+a8 = ggplot(bos,aes(x=lstat,y=crim))+geom_point()
+
+lm12 = lm(crim~medv,data=bos)
+pander(summary(lm12))
+a9 = ggplot(bos,aes(x=medv,y=crim))+geom_point()
+a9
+
+
+grid.arrange(a1,a2,a3,a4,a5,a6,a7,a8,a9)
+```
+
+It looks like there is an association with all of the predictors, however some of them don't make much sence. Some of the predictors had the vast majority at one value so it looks like crime would be significant when compared to other values. I think that `nox`,`rm`,`age`,`dis`,`lstat`, and `medv` are significant. The graph for `black` looks like it is insignificant. `Ptratio` and `indus` are both of the type that doesn't make sense. 
+
+
+```{r}
+bigone = lm(crim~zn+indus+chas+nox+rm+age+dis+rad+tax+ptratio+black+lstat+medv,data=bos)
+pander(summary(bigone))
+```
+
+It seems that indus, chas, rm, age,tax, and ptratio are all insignificant. 
+
+```{r}
+x = c(lm1$coefficients[2],lm2$coefficients[2],lm3$coefficients[2],lm4$coefficients[2],lm5$coefficients[2],lm6$coefficients[2],lm7$coefficients[2],lm8$coefficients[2],lm9$coefficients[2],lm10$coefficients[2],lm11$coefficients[2],lm12$coefficients[2])
+x = as.numeric(x)
+
+y = bigone$coefficients[2:13]
+y=as.numeric(y)
+
+df = data.frame(x,y)
+
+ggplot(df,aes(x=x,y=y))+geom_point()
+```
+
+```{r}
+lmm = lm(crim~poly(zn,3),data=bos)
+pander(summary(lmm))
+
+lmm2 = lm(crim~poly(indus,3),data=bos)
+pander(summary(lmm2))
+
+lmm3 = lm(crim~poly(nox,3),data=bos)
+pander(summary(lmm3))
+
+lmm4 = lm(crim~poly(rm,3),data=bos)
+pander(summary(lmm4))
+
+lmm5 = lm(crim~poly(age,3),data=bos)
+pander(summary(lmm5))
+
+lmm6 = lm(crim~poly(dis,3),data=bos)
+pander(summary(lmm6))
+
+lmm7 = lm(crim~poly(rad,3),data=bos)
+pander(summary(lmm7))
+
+lmm8 = lm(crim~poly(tax,3),data=bos)
+pander(summary(lmm8))
+
+lmm9 = lm(crim~poly(ptratio,3),data=bos)
+pander(summary(lmm9))
+
+lmm10 = lm(crim~poly(black,3),data=bos)
+pander(summary(lmm10))
+
+lmm11 = lm(crim~poly(lstat,3),data=bos)
+pander(summary(lmm11))
+
+lmm12 = lm(crim~poly(medv,3),data=bos)
+pander(summary(lmm12))
+```
+
+There is evidence of a non-linear relationship for up to 2 for zn, indus, nox, up to 2 for rm, age, dis, up to 2 for rad, up to 2 for tax, ptratio, up to 2 for lstat, and medv. 
+
+
+
+
+
+
+
+
+
